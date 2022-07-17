@@ -1,3 +1,9 @@
+#Team Colab project
+
+## How to Push code to Github
+
+## Please watch -> "https://www.youtube.com/watch?v=wrb7Gge9yoE"
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
