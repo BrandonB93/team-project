@@ -1,25 +1,58 @@
-import logo from './logo.svg';
-import './App.css';
+import React from "react";
+import { Routes, Route } from "react-router-dom";
+import Home from "./pages/Home";
+import Profile from "./pages/Profile";
+import Settings from "./pages/Settings";
+import Testing from "./pages/Testing";
+// import Investingvault from "./pages/Investingvault";
+import Sidebar from "./components/Sidebar";
+import Rightbar from "./components/Rightbar";
+import "./App.css";
+import { useMoralis } from "react-moralis";
+import { ConnectButton, Icon } from "web3uikit";
 
-function App() {
+
+const App = () => {
+  const { isAuthenticated, Moralis } = useMoralis();
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+    {isAuthenticated ? (
+      <div className="page">
+        <div className="sideBar">
+          <Sidebar />
+          <div
+              className="logout"
+              onClick={() => {
+                Moralis.User.logOut().then(() => {
+                  window.location.reload();
+                });
+              }}
+            >
+              Logout
+            </div>
+        </div>
+        <div className="mainWindow">
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/profile" element={<Profile />} />
+            <Route path="/settings" element={<Settings />} />
+            <Route path="/testing" element={<Testing />} />
+          </Routes>
+        </div>
+        <div className="rightBar">
+          <Rightbar />
+        </div>
+      </div>
+      ) : (
+        <div className="loginPage">
+          <Icon fill="#ffffff" size={40} svg="twitter" />
+          <ConnectButton />
+        </div>
+
+      )}
+    </>
   );
-}
+};
 
 export default App;
